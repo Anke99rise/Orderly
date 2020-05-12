@@ -36,12 +36,6 @@ $today = date("Y-m-d");
     </div>
     <input class="butt" type="submit" name="" value="Submit" >
 </form>
-<?php include 'footer.php'; ?>
-<?php
-$user='root';
-$pass='';
-$db='project';
-$db= new mysqli('localhost',$user,$pass,$db) or die("Unable to connect!");
-?>
+
 </body>
 </html>
