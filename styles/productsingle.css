@@ -1,0 +1,44 @@
+main{
+    padding-top: 100px;
+    color: white;
+}
+.prikaz{
+    background:  rgba(255,255,255,0.1);
+    padding: 30px;
+    border-radius: 20px;
+    display: flex;
+}
+.info{
+    width: 50%;
+}
+img{
+    width: 50%;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
+.info a{
+    display: inline-block;
+    background-color: white;
+    color: #89253e;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+@media (max-width: 740px) {
+    .prikaz{
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+    img{
+        width: 90%;
+        order: 1;
+    }
+    .info{
+        width: 100%;
+        order: 2;
+        text-align: center;
+    }
+}
