@@ -94,7 +94,7 @@ $title='Financial results';
                 else{
                     $no=$row3['T'];
                 }
-            $found=false; ?>
+            ?>
             <div class="fin1"><h3>Item name: <?=$row3['MI_NAME']?></h3></div>
             <div class="fin1"><h4><a href="../products/products/single_product.php?id=<?=$row3['OL_MENU']?>">Link to the item</a></h4></div>
             <div class="fin1"><h4>Total amount sold: <?=$no?></h4></div>
@@ -109,7 +109,8 @@ $title='Financial results';
 <?php endif; ?>
 <?php if($_POST and !$found):?>
     <h1>No orders were found in given period!</h1>
-<?php endif; ?>
+<?php endif; $found=false; ?>
+
 
 
 
