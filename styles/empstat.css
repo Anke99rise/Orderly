@@ -1,0 +1,17 @@
+#empy{
+    text-align: center;
+}
+
+#empstaty{
+    text-align: center;
+}
+input{
+    background-color: #89253e;
+    color:white;
+}
+.prikaz{
+    background:  rgba(255,255,255,0.1);
+    padding: 30px;
+    border-radius: 20px;
+    display: flex;
+}
