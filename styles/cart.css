@@ -1,17 +1,22 @@
-
 h2 a{
     text-decoration: none;
     color:white;
 }
-
+h3{
+    color: white;
+    text-align: center;
+}
 .car{
     box-sizing: border-box;
     color:white;
     border-radius: 10px;
     text-align: center;
     text-decoration: none;
+    margin-bottom: 20px;
 }
-
+::-webkit-scrollbar {
+    display: none;
+}
 .place{
     color:#89253e;
     background-color: white;
