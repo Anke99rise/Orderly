@@ -62,6 +62,7 @@ $title='Financial results';
 <html lang="en">
 <head>
     <link rel="stylesheet" href="../styles/stil.css">
+    <link rel="stylesheet" href="../styles/finance.css">
     <?php include('../includes/head.php') ?>
 </head>
 
@@ -69,20 +70,21 @@ $title='Financial results';
 <?php include '../includes/header.php';?>
 <div id="helping"></div>
 
-<div>
+<div id="fini">
     <form action="finance.php" method="post">
-        <label for="start">Start date</label>
+        <label for="start" style="color: white;">Start date</label>
         <input type="date" id="start" name="start">
-        <label for="end">End date</label>
+        <label for="end" style="color:white; margin-left:10px;">End date</label>
         <input type="date" id="end" name="end">
-        <input type="submit">
+        <div id="f1"><input type="submit" style="width: 30%;"></div>
     </form>
 </div>
+<main id="finmain">
 <?php if($_POST and $found):?>
-<h3>Period: <?=$start?> to <?=$end?>, excluding last day</h3>
-<h3>Total money made for a given period: <?=$totalamount?></h3>
-    <h3>Number of orders for a given period: <?=$number?></h3>
-    <h3>Best sold item is : <a href="../products/products/single_product.php?id=<?=$item_id?>"><?=$item_name?></a> , that has been sold <?=$item_number?> times</h3>
+<div class="fin1"><h3>Period: <?=$start?> to <?=$end?>, excluding last day</h3></div>
+<div class="fin1"><h3>Total money made for a given period: <?=$totalamount?></h3></div>
+    <div class="fin1"><h3>Number of orders for a given period: <?=$number?></h3></div>
+    <div class="fin1"><h3>Best sold item is : <a href="../products/products/single_product.php?id=<?=$item_id?>" style="color:red; text-decoration: none"><?=$item_name?></a> , that has been sold <span style="color:green;"><?=$item_number?></span> times</h3></div>
     <?php  while($row3=oci_fetch_assoc($query3)): ?>
         <div>
             <?php
@@ -94,10 +96,10 @@ $title='Financial results';
                     $no=$row3['T'];
                 }
             $found=false; ?>
-            <h3>Item name: <?=$row3['MI_NAME']?></h3>
-            <h4><a href="../products/products/single_product.php?id=<?=$row3['OL_MENU']?>">Link to the item</a></h4>
-            <h4>Total amount sold: <?=$no?></h4>
-            <h4>Total money earned for this item: <?=$row3['P']?></h4>
+            <div class="fin1"><h3>Item name: <?=$row3['MI_NAME']?></h3></div>
+            <div class="fin1"><h4><a href="../products/products/single_product.php?id=<?=$row3['OL_MENU']?>">Link to the item</a></h4></div>
+            <div class="fin1"><h4>Total amount sold: <?=$no?></h4></div>
+            <div class="fin1"><h4>Total money earned for this item: <?=$row3['P']?></h4></div>
             </br>
             </br>
             </br>
@@ -113,6 +115,6 @@ $title='Financial results';
 
 
 <?php include '../includes/footer.php'; ?>
-
+</main>
 </body>
 </html>
