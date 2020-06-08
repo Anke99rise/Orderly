@@ -16,7 +16,8 @@ oci_execute($query2);
 
 $row2=oci_fetch_row($query2);
 $status=$row2[3];
-
+$eid=$row2[13];
+$cid=$row2[6];
 
 $query3 = oci_parse($conn, "select TO_CHAR(max(OH_TIME_CHANGED), 'YYYY-MM-DD HH24:MI:SS'), TO_CHAR(min(OH_TIME_CHANGED), 'YYYY-MM-DD HH24:MI:SS')
                                    from orders_history
@@ -35,6 +36,7 @@ $hours=floor($minutes/60);
 $minutes2=$minutes%60;
 
 
+
 $query4 = oci_parse($conn, "select * from EMPLOYEE where E_TYPE='waiter'");
 
 if(!isset($_SESSION['id']))
@@ -42,6 +44,12 @@ if(!isset($_SESSION['id']))
     header('Location: ../index.php');
     exit();
 }
+
+if($_SESSION['type']!=1 and $_SESSION['id']!=$cid){
+    header('Location: ../error.php');
+    exit();
+}
+
 $title='Order '.$id;
 ?>
 <!doctype html>
@@ -56,25 +64,28 @@ $title='Order '.$id;
 <body>
 <?php include('../includes/header.php') ?>
 <div id="helping"></div>
-<div id="first">
+<?php
+if (isset($_SESSION['order_placed']) and $_SESSION['order_placed']):?>
+    <p class="up" id="nestat">Order has been placed</p>
+<?php endif;?>
 <div id="status"><p1>Order status: <?= $status ?></p1></div>
 <?php if($_SESSION['type']==1 and $row2[3]!='canceled' and $row2[3]!='finished') {?>
     <form method="post" action="updateorder.php?ID=<?=$id?>">
-       <div id="label"><label for="type">Choose a status of the order:</label>
-        <select name="type" id="order_type">
-            <option value="pending">Pending</option>
-            <option value="active">Active</option>
-            <option value="prepared">Prepared</option>
-            <option value="finished">Finished</option>
-            <option value="canceled">Canceled</option>
-        </select></div>
-        <div id="sub"><input type="submit"></div>
+        <div id="label"><label for="type">Choose a status of the order:</label>
+            <select name="type" class="order_type">
+                <option value="pending">Pending</option>
+                <option value="active">Active</option>
+                <option value="prepared">Prepared</option>
+                <option value="finished">Finished</option>
+                <option value="canceled">Canceled</option>
+            </select></div>
+        <div class="sub"><input type="submit"></div>
     </form>
     <form action="changewaiter.php?ID=<?=$id?>" method="post">
-        <div class="textbox">
-            <p>Waiter: <?= $row2[14]." ".$row2[15] ?></p>
-            <p style="color: rgba(255,255,255,0.6)">Choose another waiter</p>
-            <select name="waiter" id="waiter" required>
+        <div class="textbox" id="divir">
+            <p>Current waiter: <?= $row2[14]." ".$row2[15] ?></p>
+            <p style="color:white;">Choose another waiter</p>
+            <select name="waiter" id="waiter" class="order_type" required >
                 <option value="" selected disabled hidden>Choose waiter here</option>
                 <?php oci_execute($query4);
                 while($row4 = oci_fetch_assoc($query4)): ?>
@@ -82,8 +93,10 @@ $title='Order '.$id;
                 <?php endwhile; ?>
             </select>
         </div>
+        <div class="sub"><input type="submit"></div>
     </form>
 <?php } ?>
+<div id="first">
 <div id="divi">
 <p>Order time received: <?= $row2[5] ?></p>
 <p>Waiter: <?= $row2[14]." ".$row2[15] ?></p>
@@ -137,6 +150,9 @@ $title='Order '.$id;
     });
 </script>
 
-<?php $_SESSION['isUpdate']=null;?>
+<?php
+$_SESSION['order_placed']=false;
+
+$_SESSION['isUpdate']=null;?>
 </body>
 </html>
